@@ -1,6 +1,8 @@
 
 public class FabricaEmbaralhadores implements Embaralhador {
-    private BancoDePalavras bancoDePalavras;
+    protected BancoDePalavras bancoDePalavras;
+    protected String palavraDesembaralhada;
+    protected String palavraEmbaralhada;
 
     public FabricaEmbaralhadores() {
         bancoDePalavras = new BancoDePalavras();
@@ -14,6 +16,12 @@ public class FabricaEmbaralhadores implements Embaralhador {
         x[0] = x[x.length/2];
         
         StringBuffer palavraEmbaralhada = new StringBuffer(x.toString());
-        return palavraEmbaralhada.toString();
+        palavraDesembaralhada = palavraRecebida.toString();
+        this.palavraEmbaralhada = palavraEmbaralhada.toString();
+        return this.palavraDesembaralhada;
+    }
+
+    public String palavraDesembaralhada() {
+        return palavraDesembaralhada;
     }
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 public class BancoDePalavras {
     private List<String> palavras = new ArrayList<>();
+    private static int contador = 0;
     
     public BancoDePalavras() {
         consumirArquivo();
@@ -26,7 +27,9 @@ public class BancoDePalavras {
     }
 
     public String palavraAleatoria() {
-        return palavras.get((int) (Math.random() * palavras.size()));
+        String palavra = palavras.get(contador);
+        contador++;
+        return palavra;
     }
 
 }
