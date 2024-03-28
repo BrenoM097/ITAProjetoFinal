@@ -10,6 +10,8 @@ public class FabricaMecanicaDoJogo implements MecanicaDoJogo{
     private int contaPalavras = 0;
     private Scanner in = new Scanner(System.in);
     private String palavraDesembaralhada;
+    private boolean jogoGanho = false;
+    private boolean jogoPerdido = false;
 
     @Override
     public void computaPontos(String palavraEmbaralhada) {
@@ -32,10 +34,12 @@ public class FabricaMecanicaDoJogo implements MecanicaDoJogo{
                 System.out.println("Puts, passou perto, tente novamente, você ainda pode tentar " +totalVidas+" vezes!");
             }
         }
-        if (totalVidas == 0) {
+        if (totalVidas == 0 && !jogoPerdido) {
+            jogoGanho = true;
             System.out.println("Suas vidas acabaram, GAME OVER! :(, sua pontuação foi: "+totalPontos);
             encerrarJogo();
-        } else if(contaPalavras == 10) {
+        } else if(contaPalavras == 10 && !jogoGanho) {
+            jogoGanho = true;
             System.out.println("Parabens, você acertou todas as palavras, zerou o jogo! Sua pontuação foi: " + totalPontos);
             encerrarJogo();
         }
