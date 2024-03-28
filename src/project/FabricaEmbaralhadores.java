@@ -1,3 +1,4 @@
+package project;
 
 public class FabricaEmbaralhadores implements Embaralhador {
     protected BancoDePalavras bancoDePalavras;
@@ -10,15 +11,17 @@ public class FabricaEmbaralhadores implements Embaralhador {
 
     public String embaralhaPalavra() {
         StringBuffer palavraRecebida = new StringBuffer(bancoDePalavras.palavraAleatoria());
+        palavraDesembaralhada = palavraRecebida.toString();
 
         char x[] = palavraRecebida.reverse().toString().toCharArray();
+        char doMeio = x[x.length/2];
         x[x.length/2] = x[0];
-        x[0] = x[x.length/2];
+        x[0] = doMeio;
         
-        StringBuffer palavraEmbaralhada = new StringBuffer(x.toString());
-        palavraDesembaralhada = palavraRecebida.toString();
-        this.palavraEmbaralhada = palavraEmbaralhada.toString();
-        return this.palavraDesembaralhada;
+        StringBuffer sb = new StringBuffer();
+        sb.append(x);
+        palavraEmbaralhada = sb.toString();
+        return palavraEmbaralhada;
     }
 
     public String palavraDesembaralhada() {

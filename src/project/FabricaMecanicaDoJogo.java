@@ -1,55 +1,56 @@
+package project;
 import java.util.Scanner;
 
 public class FabricaMecanicaDoJogo implements MecanicaDoJogo{
-    FabricaEmbaralhadores palavraNormal = new FabricaEmbaralhadores();
-    FabricaEmbaralhadoresHard paralavraDificil = new FabricaEmbaralhadoresHard();
+    private FabricaEmbaralhadores palavraNormal = new FabricaEmbaralhadores();
+    private FabricaEmbaralhadoresHard paralavraDificil = new FabricaEmbaralhadoresHard();
     private static int totalVidas = 5;
     private static int totalPontos = 0;
-    private static String palavraEmbaralhada;
-    private static int contaPalavras = 0;
+    private String palavraEmbaralhada;
+    private int contaPalavras = 0;
     private Scanner in = new Scanner(System.in);
+    private String palavraDesembaralhada;
 
     @Override
     public void computaPontos(String palavraEmbaralhada) {
         System.out.println("Palavra a ser desembaralhada: " +palavraEmbaralhada);
 
         while(totalVidas > 0 && contaPalavras < 10) {
-            if(palavraNormal.palavraDesembaralhada.equals(in.nextLine())) {
+
+            if(palavraDesembaralhada.equals(in.nextLine())) {
                 totalPontos += palavraEmbaralhada.length();
                 System.out.println("Acertou, parabens! Você ganhou " +palavraEmbaralhada.length()+" pontos, partindo para a proxima palavra.");
                 contaPalavras++;
                 if(contaPalavras < 5) {
                     computaPontos(pegaNovaPalavra());
-                }
-                //Passou da quinta palavra começa a ficar mais dificil
-                computaPontos(pegaNovaPalavraDificil());
-                
+                } else if(contaPalavras < 10) {
+                    //Passou da quinta palavra começa a ficar mais dificil
+                    computaPontos(pegaNovaPalavraDificil());
+            }
             } else {
                 totalVidas--;
                 System.out.println("Puts, passou perto, tente novamente, você ainda pode tentar " +totalVidas+" vezes!");
             }
         }
         if (totalVidas == 0) {
-            System.out.println("Suas vidas acabaram, GAME OVER! :(");
+            System.out.println("Suas vidas acabaram, GAME OVER! :(, sua pontuação foi: "+totalPontos);
             encerrarJogo();
         } else if(contaPalavras == 10) {
-            System.out.println("Parabens, você acertou todas as palavras, zerou o jogo!");
+            System.out.println("Parabens, você acertou todas as palavras, zerou o jogo! Sua pontuação foi: " + totalPontos);
             encerrarJogo();
         }
-        
     }
 
     private String pegaNovaPalavra() {
-        return palavraNormal.embaralhaPalavra(); 
+        this.palavraEmbaralhada = palavraNormal.embaralhaPalavra();
+        this.palavraDesembaralhada = palavraNormal.palavraDesembaralhada();
+        return palavraEmbaralhada;
     }
 
     private String pegaNovaPalavraDificil() {
-        return paralavraDificil.embaralhaPalavra();
-    }
-
-    @Override
-    public int getTotalPontos() {
-        return totalPontos;
+        this.palavraEmbaralhada = paralavraDificil.embaralhaPalavra();
+        this.palavraDesembaralhada = paralavraDificil.getPalavraDesembaralhada();
+        return palavraEmbaralhada;
     }
 
     @Override
@@ -59,8 +60,7 @@ public class FabricaMecanicaDoJogo implements MecanicaDoJogo{
         computaPontos(palavraEmbaralhada);
     }
 
-    @Override
-    public void encerrarJogo() {
+    private void encerrarJogo() {
         in.close();
     }
     
